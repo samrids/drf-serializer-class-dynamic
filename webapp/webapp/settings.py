@@ -126,6 +126,7 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = "sample.User"
 
 REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
@@ -142,3 +143,4 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 20,
 }
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
