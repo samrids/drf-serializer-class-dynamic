@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth.base_user import BaseUserManager
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
@@ -67,9 +68,9 @@ class Company(Common):
         address_line += " {}".format(self.country) if self.country else ""
         address_line += " {}".format(self.zipcode) if self.zipcode else ""
         return address_line
-
 class User(Common, AbstractUser):
     email           = models.EmailField(_("email address"), unique=True)
+   
     company         = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True)
     system_role     = EnumField(SystemUserRole, default=SystemUserRole.SYS_USER, blank=True, null=True)
     registered      = models.BooleanField(default=False, db_index=True)
@@ -97,8 +98,8 @@ class User(Common, AbstractUser):
     zipcode         = models.CharField(max_length=32, blank=True, null=True)
     country         = models.CharField(max_length=64, blank=True, null=True)
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name','last_name', 'username'] 
+    USERNAME_FIELDS = ['email','username']
+    REQUIRED_FIELDS = ['first_name','last_name', 'email'] 
 
     class Meta:
         app_label = "sample"
